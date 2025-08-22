@@ -27,6 +27,3 @@ if __name__=="__main__":
   bw=BankWithdraw()
   bw.deposit(5000)
   bw.withdraw()
-
-
-
