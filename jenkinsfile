@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone and Run') {
+            steps {
+                // Clean workspace
+                sh 'rm -rf *'
+                
+                // Clone your specific branch
+                git branch: 'pythonbankapp', 
+                url: 'https://github.com/Tharungandham/Tharungandham.git'
+                
+                // Run Python script with automated input
+                sh 'printf "5000\\n3000\\n" | /opt/homebrew/bin/python3 bankwithdrawl.py'
+                
+                // Create a simple log file
+                sh 'echo "Build successful at $(date)" > build_log.txt'
+            }
+        }
+    }
+    post {
+        always {
+            // This will archive any log files
+            archiveArtifacts artifacts: '*.txt', allowEmptyArchive: true
+        }
+    }
+}
